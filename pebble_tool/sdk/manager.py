@@ -74,15 +74,13 @@ class SDKManager(object):
 
     def install_from_url(self, url):
         print("Downloading...")
-        bar = ProgressBar(widgets=[Percentage(), Bar(marker='=', left='[', right=']'), ' ', FileTransferSpeed(), ' ',
-                                   Timer(format='%s')])
-        bar.start()
         response = requests.get(url, stream=True)
         response.raise_for_status()
-        bar.maxval = int(response.headers['Content-Length'])
+        bar = ProgressBar(widgets=[Percentage(), Bar(marker='=', left='[', right=']')],
+                          maxval=int(response.headers['Content-Length'])).start()
         with tempfile.TemporaryFile() as f:
             for content in response.iter_content(512):
-                bar.update(bar.currval + len(content))
+                bar.update(len(content))
                 f.write(content)
             bar.finish()
             f.flush()
