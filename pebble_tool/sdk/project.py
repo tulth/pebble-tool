@@ -126,7 +126,10 @@ class AppinfoProject(PebbleProject):
 
 class NpmProject(PebbleProject):
     def __new__(cls, *args, **kwargs):
-        return object.__new__(cls, *args, **kwargs)
+         if (sys.version_info > (3, 0)):
+             return object.__new__(cls)
+         else:
+             return object.__new__(cls, *args, **kwargs)
 
     @staticmethod
     def check_project_directory(project_dir):
