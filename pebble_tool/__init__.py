@@ -1,4 +1,5 @@
 from __future__ import absolute_import, print_function
+from builtins import str
 __author__ = 'katharine'
 
 import atexit
@@ -43,7 +44,7 @@ def run_tool(args=None):
     try:
         args.func(args)
     except ToolError as e:
-        parser.exit(message=unicode(e)+"\n", status=1)
+        parser.exit(message=str(e)+"\n", status=1)
         sys.exit(1)
 
 
