@@ -26,7 +26,8 @@ class SDKManager(BaseCommand):
     @classmethod
     def add_parser(cls, parser):
         parser = super(SDKManager, cls).add_parser(parser)
-        subparsers = parser.add_subparsers(title="subcommand")
+        subparsers = parser.add_subparsers(title="subcommand", dest='subcommand')
+        subparsers.required = True
 
         list_parser = subparsers.add_parser("list", help="Lists available SDKs.")
         list_parser.set_defaults(sub_func=cls.do_list)
